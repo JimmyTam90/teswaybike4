@@ -1,37 +1,30 @@
-import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { Barlow, Barlow_Condensed } from "next/font/google";
 import type { ReactNode } from "react";
+import "./globals.css";
 import Tracking from "@/components/Tracking";
-import { SITE } from "@/lib/site";
-import { hero } from "@/lib/products";
-
-const body = Barlow({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-body", display: "swap" });
-const display = Barlow_Condensed({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-display", display: "swap" });
+import { MERCHANT_ORIGIN } from "@/lib/products";
+import { SITE_ORIGIN } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE.domain),
-  title: SITE.title,
-  description: SITE.description,
-  alternates: { canonical: SITE.url },
+  metadataBase: new URL(SITE_ORIGIN),
   robots: { index: true, follow: true },
-  icons: { icon: "/tesway-bike/favicon.svg" },
-  openGraph: {
-    type: "website", url: SITE.url, siteName: SITE.name, title: SITE.title, description: SITE.description,
-    images: [{ url: hero.image, alt: hero.imageAlt }],
-  },
-  twitter: { card: "summary_large_image", title: SITE.title, description: SITE.description, images: [hero.image] },
 };
-export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#0F172A" };
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0F172A",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${body.variable} ${display.variable}`}>
+    <html lang="en">
       <head>
-        <link rel="dns-prefetch" href={SITE.merchantOrigin} />
-        <link rel="preconnect" href={SITE.merchantOrigin} crossOrigin="anonymous" />
+        {/* Merchant origin is the verified destination of every product CTA. */}
+        <link rel="dns-prefetch" href={MERCHANT_ORIGIN} />
+        <link rel="preconnect" href={MERCHANT_ORIGIN} crossOrigin="anonymous" />
       </head>
-      <body className="font-sans antialiased">
+      <body className="min-h-screen overflow-x-hidden bg-bg text-ink antialiased">
         {children}
         <Tracking />
       </body>

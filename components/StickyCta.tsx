@@ -1,16 +1,24 @@
-import { hero } from "@/lib/products";
-import TrackedLink from "./TrackedLink";
+import type { Product } from "@/lib/products";
+import CtaLink from "./CtaLink";
 
-// Separate from product images; fixed to the viewport bottom, mobile only, safe-area aware.
-export default function StickyCta() {
+/**
+ * Mobile-only bar, fixed at the bottom. It is a separate element (never over a product image)
+ * and the page reserves matching bottom padding so the footer stays reachable.
+ */
+export default function StickyCta({ product }: { product: Product }) {
   return (
-    <div className="pointer-events-auto fixed inset-x-0 bottom-0 z-50 border-t border-slate-700 bg-ink/95 px-4 pt-3 safe-bottom md:hidden">
-      <TrackedLink href={hero.affiliateUrl} productId={hero.id} placement="sticky"
-        className="flex min-h-[48px] w-full items-center justify-between gap-3 rounded-lg bg-eco px-4 py-2 font-bold text-white"
-        ariaLabel={`Shop ${hero.name} at Tesway (opens in a new tab)`}>
-        <span>{hero.shortName} from {hero.price}</span>
-        <span>Shop now</span>
-      </TrackedLink>
+    <div
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-700 bg-bg/95 px-4 pt-3 backdrop-blur md:hidden"
+      style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+    >
+      <CtaLink
+        href={product.affiliateUrl}
+        productId={product.id}
+        placement="sticky_mobile"
+        className="inline-flex min-h-[48px] w-full items-center justify-center rounded-lg bg-brand px-4 py-3 text-center text-base font-bold text-white focus:outline-none focus-visible:ring-4 focus-visible:ring-electric/60"
+      >
+        See {product.shortName} · {product.priceLabel}
+      </CtaLink>
     </div>
   );
 }

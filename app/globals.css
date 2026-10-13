@@ -2,9 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --bg: #0F172A; --card: #1E293B; --fg: #F8FAFC; }
-html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
-body { background: var(--bg); color: var(--fg); -webkit-text-size-adjust: 100%; }
-a:focus-visible, button:focus-visible { outline: 3px solid #93C5FD; outline-offset: 2px; border-radius: 6px; }
-.safe-bottom { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+html {
+  background: #0f172a;
+  color-scheme: dark;
+}
+
+body {
+  background: #0f172a;
+  color: #f8fafc;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
